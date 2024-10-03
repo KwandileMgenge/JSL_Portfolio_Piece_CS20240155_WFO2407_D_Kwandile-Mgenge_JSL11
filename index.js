@@ -19,7 +19,15 @@ function initializeData() {
 
 // TASK: Get elements from the DOM
 const elements = {
-
+  headerBoardName: document.querySelector('#header-board-name'),
+  columnDivs: document.querySelectorAll('.column-div'),
+  editTaskModal: document.querySelector('#edit-task-modal-window'),
+  filterDiv: document.querySelector('#filterDiv'),
+  themeSwitch: document.querySelector('#switch'),
+  hideSideBarBtn: document.querySelector('#hide-side-bar-btn'),
+  showSideBarBtn: document.querySelector('#show-side-bar-btn'),
+  createNewTaskBtn: document.querySelector('.create-task-btn'),
+  modalWindow: document.querySelector('.modal-window'),
 }
 
 let activeBoard = ""
@@ -64,7 +72,7 @@ function displayBoards(boards) {
 // TASK: Fix Bugs
 function filterAndDisplayTasksByBoard(boardName) {
   const tasks = getTasks(); // Fetch tasks from a simulated local storage function
-  const filteredTasks = tasks.filter(task => task.board = boardName);
+  const filteredTasks = tasks.filter(task => task.board === boardName);
 
   // Ensure the column titles are set outside of this function or correctly initialized before this function runs
 
@@ -79,7 +87,7 @@ function filterAndDisplayTasksByBoard(boardName) {
     const tasksContainer = document.createElement("div");
     column.appendChild(tasksContainer);
 
-    filteredTasks.filter(task => task.status = status).forEach(task => { 
+    filteredTasks.filter(task => task.status === status).forEach(task => { 
       const taskElement = document.createElement("div");
       taskElement.classList.add("task-div");
       taskElement.textContent = task.title;
@@ -103,7 +111,7 @@ function refreshTasksUI() {
 // Styles the active board by adding an active class
 // TASK: Fix Bugs
 function styleActiveBoard(boardName) {
-  document.querySelectorAll('.board-btn').foreach(btn => { 
+  document.querySelectorAll('.board-btn').forEach(btn => { 
     
     if(btn.textContent === boardName) {
       btn.classList.add('active') 
@@ -116,13 +124,13 @@ function styleActiveBoard(boardName) {
 
 
 function addTaskToUI(task) {
-  const column = document.querySelector('.column-div[data-status="${task.status}"]'); 
+  const column = document.querySelector(`.column-div[data-status="${task.status}"]`); 
   if (!column) {
     console.error(`Column not found for status: ${task.status}`);
     return;
   }
 
-  let tasksContainer = column.querySelector('.tasks-container');
+  let tasksContainer = document.querySelector('.tasks-container');
   if (!tasksContainer) {
     console.warn(`Tasks container not found for status: ${task.status}, creating one.`);
     tasksContainer = document.createElement('div');
@@ -132,7 +140,7 @@ function addTaskToUI(task) {
 
   const taskElement = document.createElement('div');
   taskElement.className = 'task-div';
-  taskElement.textContent = task.title; // Modify as needed
+  taskElement.textContent = 'task.title'; // Modify as needed
   taskElement.setAttribute('data-task-id', task.id);
   
   tasksContainer.appendChild(taskElement); 
@@ -173,7 +181,7 @@ function setupEventListeners() {
 
   // Add new task form submission event listener
   elements.modalWindow.addEventListener('submit',  (event) => {
-    addTask(event)
+    addTask(event);
   });
 }
 
@@ -192,7 +200,11 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      
+      id: Date.now(),
+      title: document.querySelector('#title-input').value,
+      description: document.querySelector('#desc-input').value,
+      status: document.querySelector('#select-status').value,
+      board: activeBoard
     };
     const newTask = createNewTask(task);
     if (newTask) {
