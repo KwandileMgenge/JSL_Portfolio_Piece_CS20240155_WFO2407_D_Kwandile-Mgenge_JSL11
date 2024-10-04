@@ -189,7 +189,7 @@ function setupEventListeners() {
 // Toggles tasks modal
 // Task: Fix bugs
 function toggleModal(show, modal = elements.modalWindow) {
-
+  elements.filterDiv.style.display = show ? 'block' : 'none';
   modal.style.display = show ? 'block' : 'none'; 
 }
 
@@ -244,17 +244,18 @@ function openEditTaskModal(task) {
   const deleteTaskBtn = document.getElementById('delete-task-btn');
 
   // Call saveTaskChanges upon click of Save Changes button
-  saveTaskChangesBtn.addEventListener('click', () => saveTaskChanges(task.id)); // Call saveTaskChanges upon click of Save Changes button
+  saveTaskChangesBtn.addEventListener('click', () => {
+    saveTaskChanges(task.id)// Call saveTaskChanges upon click of Save Changes button
+    elements.filterDiv.style.display = 'none';
+  }); 
 
   // Delete task using a helper function and close the task modal
   deleteTaskBtn.addEventListener('click', () => {
-    elements.filterDiv.style.display = 'block'
     toggleModal(false, elements.editTaskModal);
     toggleModal(true, elements.confirmationModal);
 
     const confrimAddTaskBtn = document.getElementById('confirm-delete-btn');
     confrimAddTaskBtn.addEventListener('click', () => {
-      elements.filterDiv.style.display = 'none';
       deleteTask(task.id);
       refreshTasksUI(); // Refresh the task UI after deletion
       toggleModal(false, elements.confirmationModal)
@@ -262,20 +263,17 @@ function openEditTaskModal(task) {
 
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     cancelDeleteBtn.addEventListener('click', () => {
-      elements.filterDiv.style.display = 'none';
       toggleModal(false, elements.confirmationModal)
     });
 
     elements.filterDiv.addEventListener('click', () => {
       toggleModal(false, elements.confirmationModal);
-      elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
     });
   })
   
-  elements.filterDiv.style.display = 'block'
+  
   elements.filterDiv.addEventListener('click', () => {
     toggleModal(false, elements.editTaskModal);
-    elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
   });
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
 }
