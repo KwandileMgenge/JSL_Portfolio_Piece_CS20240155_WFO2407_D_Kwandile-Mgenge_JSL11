@@ -303,7 +303,8 @@ header {
 /* Edit task */
 
 #create-task-btn,
-#cancel-add-task-btn {
+#cancel-add-task-btn,
+#cancel-delete-btn {
   margin-top: 15px;
   flex: 1; /* This will make both buttons flex equally */
 }
@@ -325,7 +326,8 @@ header {
   padding: 100px 0; /* Adjust padding as necessary */
 }
 
-#cancel-add-task-btn {
+#cancel-add-task-btn,
+#confirm-delete-btn {
   background-color: #ea5555;
 }
 
@@ -491,7 +493,7 @@ header {
   cursor: pointer;
 }
 
-#delete-task-btn {
+#delete-task-btn, #confirm-delete-btn {
   background-color:#ea5555;
   color: white;
   border-radius: 30px;
