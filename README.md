@@ -3,9 +3,7 @@
 ## Features
 
 - Create, edit, and delete tasks.
-- Organize tasks into different boards.
 - Filter and display tasks by board and status.
-- Responsive user interface.
 - Theme switching between light and dark modes.
 - Confirmation dialog for task deletion.
 
